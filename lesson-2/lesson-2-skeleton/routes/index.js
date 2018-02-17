@@ -7,12 +7,16 @@ const host = 'http://138.68.240.16:3000';
 
 /* GET home page. */
 router.get('/', (req, res) => {
-  return res.render('index');
+    const response = fetch(`${host}/dogs`)
+        .then(result => result.json())
+        .then(dogs => res.render('index', { dogs }))
+        .catch(error => res.render('error', { error }));
 });
 
 /* GET Dog detail page */
 router.get('/:name', (req, res) => {
   const { name } = req.params;
+  const { comment } = req.body;
   return res.render('dog');
 });
 
